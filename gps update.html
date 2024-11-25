@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Logistics - GPS Tracking</title>
+    <style>
+        /* Basic reset and layout styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        #main-content {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        #map {
+            width: 70%;
+            height: 100%;
+        }
+        .sidebar {
+            width: 30%;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            color: #003366;
+            font-size: 1.5em;
+        }
+        .tracking-details {
+            margin-top: 20px;
+        }
+        .detail-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .status {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #003366;
+            color: white;
+        }
+    </style>
+    <!-- Google Maps API Script -->
+<!--    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>-->
+
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Swift Logistics</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Services</a>
+            <a href="#">Track Package</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Map Section -->
+        <div id="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255298.24604086464!2d36.91965359944028!3d-1.1353028035962018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f4616a21d035d%3A0xd46c6efa3589f45f!2sJuja!5e0!3m2!1sen!2ske!4v1729864535073!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <!-- Sidebar for Tracking Details -->
+        <div class="sidebar">
+            <h2>Tracking Details</h2>
+            <div class="tracking-details">
+                <div class="detail-item">
+                    <strong>Shipment ID:</strong> #123456
+                </div>
+                <div class="detail-item">
+                    <strong>Status:</strong> <span class="status">In Transit</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Driver:</strong> John Doe
+                </div>
+                <div class="detail-item">
+                    <strong>Estimated Arrival:</strong> 3:30 PM
+                </div>
+                <div class="detail-item">
+                    <strong>Last Updated:</strong> 5 minutes ago
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        &copy; 2024 Swift Logistics | All Rights Reserved
+    </div>
+
+    <script>
+        // Initialize the map with a default location
+        let map;
+        let marker;
+
+        function initMap() {
+            // Set the default location for the map (e.g., Nairobi)
+            const defaultLocation = { lat: -1.286389, lng: 36.817223 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultLocation,
+                zoom: 10,
+            });
+
+            // Place a marker for the vehicle
+            marker = new google.maps.Marker({
+                position: defaultLocation,
+                map: map,
+                title: "Vehicle Location",
+                icon: {
+                    url: "https://maps.google.com/mapfiles/kml/shapes/truck.png",
+                    scaledSize: new google.maps.Size(32, 32)
+                }
+            });
+        }
+
+        // Example function to update vehicle location
+        function updateVehicleLocation(lat, lng) {
+            const newLocation = { lat: lat, lng: lng };
+            marker.setPosition(newLocation);
+            map.panTo(newLocation);
+        }
+
+        // Example: Simulating real-time updates every 5 seconds
+        setInterval(() => {
+            const newLat = -1.286389 + (Math.random() - 0.5) * 0.02;
+            const newLng = 36.817223 + (Math.random() - 0.5) * 0.02;
+            updateVehicleLocation(newLat, newLng);
+        }, 5000);
+    </script>
+</body>
+</html>
